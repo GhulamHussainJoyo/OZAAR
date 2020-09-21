@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="55dp"
+    android:layout_marginRight="55dp"
+    android:layout_marginTop="150dp"
+    android:layout_marginBottom="200dp"
+    android:background="@drawable/add_ozaar_bkgrd"
+    android:weightSum="10"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.8"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@android:color/white"
+        android:text="Add Ozaar"
+        android:fontFamily="@font/bangers"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        />
+
+
+    // 1.5
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyle_white"
+        android:id="@+id/ozaarName_FromAddOzarForUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        app:startIconDrawable="@drawable/items_for_add_item_for_ozaar"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:startIconTint="@android:color/white"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ozaarName_FromAddOzarForUpdateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:hint="Ozaar Name"
+            android:textColorHint="@android:color/white"
+            android:maxLength="20"
+            android:inputType="text"
+            android:textSize="11sp"
+            android:fontFamily="@font/nexa_bold"
+            android:textColor="@android:color/black"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        />
+
+    // 1.5
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyle_white"
+        android:id="@+id/totalNumber_FromAddOzarForUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColorHint="@android:color/white"
+
+        app:startIconDrawable="@drawable/total_png_for_additemforozaar"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:startIconTint="@android:color/white"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/totalNumber_FromAddOzarForUpdateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:hint="Total Number"
+            android:maxLength="6"
+            android:inputType="number"
+            android:textSize="11sp"
+            android:fontFamily="@font/nexa_bold"
+            android:textColor="@android:color/black"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        />
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.2"
+        >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/updateOzaarDataIntoFire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="30dp"
+            app:srcCompat="@drawable/arrow_forward"
+            app:fabCustomSize="50dp"
+            app:backgroundTint="@color/yellow_dark" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</LinearLayout>

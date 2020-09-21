@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddItemsForOzaar"
+    android:background="@drawable/add_items_bkgrd"
+    android:weightSum="10"
+    android:orientation="vertical"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="80dp"
+    android:layout_marginBottom="80dp"
+    >
+
+
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="2.1"
+       />
+
+  <androidx.cardview.widget.CardView
+      style="@style/MyCardView"
+      android:layout_width="match_parent"
+
+      android:layout_height="0dp"
+      android:layout_weight="1.5"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      app:cardCornerRadius="10dp"
+
+      android:layout_gravity="center"
+      app:cardElevation="4dp"
+
+      >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:weightSum="10"
+
+          >
+
+
+          <View
+              android:layout_width="0dp"
+              android:layout_weight="1"
+              android:layout_gravity="center"
+              android:layout_height="wrap_content"
+              />
+
+          <com.google.android.material.textfield.TextInputLayout
+              style="@style/TextInputLayoutStyle_black"
+              android:id="@+id/ozaarName"
+              android:layout_width="0dp"
+              android:layout_weight="9"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:textColorHint="@android:color/black"
+
+              app:startIconDrawable="@drawable/items_for_add_item_for_ozaar"
+              app:boxCornerRadiusBottomEnd="8dp"
+              app:boxCornerRadiusBottomStart="8dp"
+
+              app:boxCornerRadiusTopEnd="8dp"
+              app:boxCornerRadiusTopStart="8dp"
+              app:startIconTint="@android:color/black"
+              >
+              <com.google.android.material.textfield.TextInputEditText
+                  android:id="@+id/ozaarNameEditText"
+                  android:layout_width="match_parent"
+                  android:layout_height="45dp"
+                  android:hint="Ozaar Name"
+                  android:maxLength="20"
+                  android:inputType="text"
+                  android:textSize="11sp"
+                  android:fontFamily="@font/nexa_bold"
+                  android:textColor="@android:color/black"
+                  />
+
+          </com.google.android.material.textfield.TextInputLayout>
+
+          <View
+              android:layout_width="25dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_weight="0.5" />
+
+      </LinearLayout>
+
+  </androidx.cardview.widget.CardView>
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="0.3"
+       />
+
+    <androidx.cardview.widget.CardView
+        style="@style/MyCardView"
+        android:layout_width="match_parent"
+
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp"
+
+        android:layout_gravity="center"
+        app:cardElevation="4dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10"
+
+            >
+
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayoutStyle_black"
+                android:id="@+id/purchasePrice"
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColorHint="@android:color/black"
+
+                app:startIconDrawable="@drawable/purchase_png_for_additemforozaar"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:startIconTint="@android:color/black"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/purchasePriceEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:hint="Purchase Price"
+                    android:maxLength="6"
+                    android:inputType="number"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/nexa_bold"
+                    android:textColor="@android:color/black"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        />
+
+
+    <androidx.cardview.widget.CardView
+        style="@style/MyCardView"
+        android:layout_width="match_parent"
+
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp"
+
+        android:layout_gravity="center"
+        app:cardElevation="4dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10"
+
+            >
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayoutStyle_black"
+                android:id="@+id/sellPrice"
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColorHint="@android:color/black"
+
+                app:startIconDrawable="@drawable/sell_png_for_additemforozaar"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:startIconTint="@android:color/black"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sellPriceEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:hint="Sell price"
+                    android:maxLength="6"
+                    android:inputType="number"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/nexa_bold"
+                    android:textColor="@android:color/black"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        />
+
+
+    <androidx.cardview.widget.CardView
+        style="@style/MyCardView"
+        android:layout_width="match_parent"
+
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp"
+
+        android:layout_gravity="center"
+        app:cardElevation="4dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10"
+
+            >
+
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayoutStyle_black"
+                android:id="@+id/totalNumber"
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColorHint="@android:color/black"
+
+                app:startIconDrawable="@drawable/total_png_for_additemforozaar"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:startIconTint="@android:color/black"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/totalNumberEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:hint="Total Number"
+                    android:maxLength="6"
+                    android:inputType="number"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/nexa_bold"
+                    android:textColor="@android:color/black"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+
+     />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addOzaar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            app:backgroundTint="@color/yellow_dark"
+            app:fabCustomSize="40dp"
+            app:rippleColor="@color/transparent"
+            app:srcCompat="@drawable/arrow_forward" />
+
+    </RelativeLayout>
+
+</LinearLayout>

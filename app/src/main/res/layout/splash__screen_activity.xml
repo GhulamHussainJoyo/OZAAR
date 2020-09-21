@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/splashLinearLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_screen_bkgrd"
+    tools:context=".Splash_Screen"
+    android:orientation="vertical"
+    android:weightSum="10"
+
+    >
+    
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"/>
+
+
+    <ImageView
+       android:id="@+id/logo_Image"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="2.4"
+        android:transitionName="logo_Image"
+        android:src="@drawable/splash_bike_bkgrd" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
+
+    // 0.2 remaining
+
+    <TextView
+        android:id="@+id/logo_name"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.4"
+        android:text=" OZAAR "
+        android:fontFamily="@font/bangers"
+        android:textColor="@color/yellow_dark"
+        android:textSize="83sp"
+        android:layout_gravity="center"
+        android:transitionName="logo_Text"/>
+
+    <TextView
+        android:id="@+id/slogan"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:text="Ap Ka Record Hamari Amanat"
+        android:textColor="@color/yellow_dark"
+        android:layout_gravity="center"
+        android:fontFamily="@font/nexa_bold"
+        android:textSize="12sp"
+        android:letterSpacing="0.09"
+        android:layout_marginLeft="5dp"
+        android:transitionName="logo_Text"
+        />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+
+
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp" />
+
+
+<!--    app:icon_four="@drawable/setting_vector"-->
+<!--    app:icon_five="@drawable/add_vector"-->
+    <!--        app:layout_behavior="eu.long1.spacetablayout.SpaceTabLayoutBehavior"-->
+
+
+    <eu.long1.spacetablayout.SpaceTabLayout
+        android:id="@+id/spaceTabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:number_of_tabs="five"
+        app:starting_position="three"
+        app:tab_color="@color/colorPrimary"
+        app:button_color="@color/yellow_dark"
+        app:text_color="#ffff"
+        app:icon_one="@drawable/profit_1"
+        app:icon_two="@drawable/loss"
+        app:icon_three="@drawable/home_vector"
+        app:icon_four="@drawable/home_vector"
+        app:icon_five="@drawable/home_vector"
+       />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

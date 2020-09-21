@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000022</color>
+    <color name="colorPrimaryDark">#000031</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="yellow_dark">#FFC400</color>
+    <color name="grey">#B4B2B2</color>
+
+    <color name="red">#FF0000</color>
+
+    <color name="black_overlay">#66000000</color>
+
+
+    <color name="tool_color">#C0031B</color>
+
+    <color name="red_dark">#E40114</color>
+    <color name="background">#AAF8ED</color>
+    <color name="black">#000000</color>
+
+    <color name="black_light">#B4B2B2</color>
+    <color name="black_very_low">#B9AEAE</color>
+    <color name="yellow">#F7FF00</color>
+    <color name="background_color">#F4F4F4</color>
+    <color name="transparent">#00000000</color>
+    <color name="yellow_coin">#FFC400</color>
+
+    <color name="facebook_color">#3b5998</color>
+
+    <color name="login_background">#B60214</color>
+
+    <color name="darkblue">#000030</color>
+    <color name="yellow_light">#FFEB3B</color>
+
+
+    <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
+    <color name="grey_color">#6A6A6A</color>
+
+
+</resources>

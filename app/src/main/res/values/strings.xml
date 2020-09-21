@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">OZAAR</string>
+    <string name="it_s_easier_to_sign_up_now">it\'s easier to sign up now</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_account_or_sign_up">create Account or Sign Up</string>
+    <string name="already_have_an_account">Already have an account  ?</string>
+    <string name="title_activity_splash_screen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="this_is_loss_by">"this is loss by "</string>
+    <string name="products">" products"</string>
+    <string name="pkr">PKR</string>
+    <string name="sell">SELL</string>
+    <string name="items">ITEMS</string>
+    <string name="profit">PROFIT</string>
+    <string name="update">UPDATE</string>
+    <string name="add_item">ADD ITEM</string>
+    <string name="short_items">SHORT ITEMS</string>
+    <string name="add_items">ADD  ITEMS</string>
+</resources>
