@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="7dp"
+    app:cardUseCompatPadding="true"
+    >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            >
+
+         <LinearLayout
+             android:id="@+id/nameOfParts"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:layout_marginLeft="10dp"
+
+             >
+
+             <TextView
+                 android:id="@+id/name_Of_parts_1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="NAME "
+                 android:textColor="@color/black"
+                 android:textSize="17dp"
+                 app:fontFamily="@font/nexa_bold"
+                 android:layout_marginRight="3dp"/>
+
+             <TextView
+                 android:id="@+id/name_Of_parts_2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Of Parts"
+                 android:textColor="@color/yellow_dark"
+                 android:textSize="17dp"
+                 app:fontFamily="@font/nexa_bold" />
+
+         </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sellID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+              android:layout_alignParentRight="true"
+                android:layout_below="@+id/nameOfParts"
+
+
+                >
+
+                <TextView
+                    android:id="@+id/sell_number"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nexa_bold"
+                    android:text="00"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/total_number"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nexa_bold"
+                    android:text="00"
+                    android:textColor="@color/grey_color"
+                    android:textSize="12dp"
+                    android:layout_marginLeft="2dp"
+                    />
+
+
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:id="@+id/total_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/sellID"
+                android:orientation="vertical"
+                android:layout_below="@+id/nameOfParts"
+                android:layout_marginRight="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/sell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOLD"
+                    android:textSize="12dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/nexa_bold"
+                    />
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STOCK"
+                    android:textSize="12dp"
+                    android:textColor="@color/grey_color"
+                    android:fontFamily="@font/nexa_bold"/>
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_below="@id/nameOfParts">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:id="@+id/loss_profit"
+                        android:textSize="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nexa_bold"
+                        android:text="Last Purchase Date : "
+                        android:textColor="@color/grey_color" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:text="00"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/grey_color"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

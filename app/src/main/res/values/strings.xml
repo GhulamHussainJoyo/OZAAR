@@ -17,4 +17,9 @@
     <string name="add_item">ADD ITEM</string>
     <string name="short_items">SHORT ITEMS</string>
     <string name="add_items">ADD  ITEMS</string>
+    <string name="loss_price">Loss Price</string>
+    <string name="stock">STOCK</string>
+    <string name="last_sell_date">last sell date:</string>
+    <string name="profit_price">Profit Price</string>
+    <string name="sell_price">sell price</string>
 </resources>

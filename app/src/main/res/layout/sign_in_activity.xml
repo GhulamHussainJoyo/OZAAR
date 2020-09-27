@@ -131,6 +131,8 @@
         android:layout_weight="0.8"
         app:startIconDrawable="@drawable/email"
         app:startIconTint="@android:color/white"
+        app:hintTextColor="@android:color/white"
+        app:hintEnabled="true"
         app:endIconCheckable="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -150,7 +152,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
-            android:text="Email@gmail.com"
             android:textColor="@android:color/white"
             android:fontFamily="@font/nexa_bold"
             android:inputType="text"
@@ -178,7 +179,7 @@
         android:layout_weight="0.8"
         app:startIconDrawable="@drawable/password"
         app:startIconTint="@android:color/white"
-
+        app:hintTextColor="@android:color/white"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@android:color/white"
         android:layout_marginLeft="20dp"
@@ -198,6 +199,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="password.."
+            android:textColor="@android:color/white"
             android:inputType="textPassword"
             android:textStyle="bold"/>
 

@@ -2,6 +2,8 @@ package com.example.ozaar.spare.parts.Fragment;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +21,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.ozaar.spare.parts.Jason;
+import com.example.ozaar.spare.parts.MainActivity;
 import com.example.ozaar.spare.parts.PartsAdapter;
+import com.example.ozaar.spare.parts.PartsAdapterForShortItems;
 import com.example.ozaar.spare.parts.R;
+import com.example.ozaar.spare.parts.RegisterationMethod;
+import com.example.ozaar.spare.parts.StatusManger;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,21 +56,31 @@ import java.util.LinkedList;
 import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
+import static com.example.ozaar.spare.parts.Fragment.Items.gridView;
+import static com.example.ozaar.spare.parts.Fragment.Items.partsAdapter;
 
 public class Fragment_Dashboard extends Fragment {
+
+    private LinkedList<String[]> shortOzaarLinkedList=new LinkedList<String[]>();
 
     String userId;
     private static View view;
     private TextView numberOfLossItems, personNameDashbord, personNumberDashbord, lossPriceDashbord, sellProgressText, itemProgressText,
                                                                 profitProgressText,shortItemNumberDetails;
     private ProgressBar sellProgressBar, itemProgressBar, profitProgressBar;
-    private ImageButton addItemBtn, sellItemBtn, item, loss, profit, sell, addNewItemsBtn, go_btn;
+    private ImageButton addItemBtn, sellItemBtn, item, loss, profit, sell, addNewItemsBtn;
+
     private Dialog epicDialog;
     ProgressDialog progressDialog;
     private ImageButton itemImageBtn,lossImageBtn,profitImageBtn,sellImageBtn;
-    private TextInputLayout nameOfSellingItem, priceOfSellingItem;
-    private TextInputLayout nameOfOzaar,purchasePrice,sellPrice,totalNumber,ozaarName_FromAddOzarForUpdate,totalNumber_FromAddOzarForUpdate;
-    private FloatingActionButton addOzzar,updateOzaarDataIntoFire;
+
+                                                            // TextInputLayout
+    private TextInputLayout nameOfOzaar,purchasePrice,sellPrice,totalNumber,ozaarName_FromAddOzarForUpdate,totalNumber_FromAddOzarForUpdate,
+                                                                        sellNameOfOzaarItems,sellPriceOfOzaarItems,totalSellItemsOfOzaarItems;
+
+
+
+    private FloatingActionButton addOzzar,updateOzaarDataIntoFire,go_btn;
 
     private Dialog dialogForAddItemsOfOzaar;
 
@@ -80,6 +100,7 @@ public class Fragment_Dashboard extends Fragment {
     String email ;
     String password ;
 
+    PartsAdapterForShortItems partsAdapterForShortItems;
 
 
     @Override
@@ -187,33 +208,7 @@ public class Fragment_Dashboard extends Fragment {
         /*********************** Initializing Short Items ListView  ***************************/
 
         shortItemsListView = view.findViewById(R.id.shortItems_listView);
-        LinkedList<String[]> list =new LinkedList<>();
-        String[] it=new String[4];
-        it[0] = "Head Lights";
-        it[1] = "10/4/2020";
-        it[2] = "12";
-        it[3] = "6";
 
-
-        list.add(it);
-
-        String[] ite=new String[4];
-        ite[0] = "Head Lights";
-        ite[1] = "10/4/2020";
-        ite[2] = "12";
-        ite[3] = "6";
-
-        list.add(ite);
-
-        String[] item=new String[4];
-        item[0] = "Head Lights";
-        item[1] = "10/4/2020";
-        item[2] = "12";
-        item[3] = "6";
-
-        list.add(item);
-        PartsAdapter partsAdapter=new PartsAdapter(view.getContext(),list);
-        shortItemsListView.setAdapter(partsAdapter);
 
         /*********************** Initializing Floating Action Button  ***************************/
 
@@ -230,7 +225,7 @@ public class Fragment_Dashboard extends Fragment {
             JSONObject jsonObject = Jason.ReadJasonData(view.getContext());
             String name = (String) jsonObject.get("name");
             String phoneNumber = jsonObject.get("phoneNumber").toString();
-            personNameDashbord.setText(name);
+            personNameDashbord.setText(name.toUpperCase());
             personNumberDashbord.setText(phoneNumber);
 
         }catch (Exception e)
@@ -248,19 +243,750 @@ public class Fragment_Dashboard extends Fragment {
         sellItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Sell Item Button", Toast.LENGTH_SHORT).show();
+                showSellDialogBox();
             }
         });
 
 
 
+
+
+       // getActivity().onBackPressed();
         return view;
+
 
     }
 
+
+    private void showSellDialogBox()
+    {
+
+
+        final Dialog sell_dialog = new Dialog(view.getContext());
+
+        sell_dialog.setContentView(R.layout.sell_ozaar_popup);
+
+        go_btn = sell_dialog.findViewById(R.id.go_btn);
+
+
+
+        sellNameOfOzaarItems = sell_dialog.findViewById(R.id.sellNameOfOzaarItems);
+        sellPriceOfOzaarItems = sell_dialog.findViewById(R.id.sellPriceOfOzaarItems);
+        totalSellItemsOfOzaarItems = sell_dialog.findViewById(R.id.totalSellItemsOfOzaarItems);
+
+        sell_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        sell_dialog.show();
+
+        sellNameOfOzaarItems.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if (!TextUtils.isEmpty(editable))
+                {
+                    final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("User").child(userId);
+
+                    Query query = mRef.child("Parts").orderByChild("name_of_parts").equalTo(String.valueOf(editable).toLowerCase());
+
+
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            if (snapshot.exists())
+                            {
+                                //Toast.makeText(DashBoard.this, snapshot.toString(), Toast.LENGTH_SHORT).show();
+                                Log.i(TAG,snapshot.toString());
+
+
+                                sellNameOfOzaarItems.setError(null);
+                                sellNameOfOzaarItems.setErrorEnabled(false);
+
+                                int purchase_price = 0;
+                                int totat_items = 0;
+
+                                for(DataSnapshot fields : snapshot.getChildren())
+                                {
+                                    purchase_price = Integer.parseInt(fields.child("purchase_price").getValue(String.class));
+                                    totat_items = fields.child("Number_of_items").getValue(Integer.class);
+
+                                }
+                                sellNameOfOzaarItems.setError("purchase price is : "+String.valueOf(purchase_price));
+                                totalSellItemsOfOzaarItems.setError("total: "+String.valueOf(totat_items));
+                             
+
+                            }
+                            else
+                            {
+                                sellNameOfOzaarItems.setError(null);
+                                sellNameOfOzaarItems.setErrorEnabled(false);
+
+                                totalSellItemsOfOzaarItems.setError(null);
+                                totalSellItemsOfOzaarItems.setErrorEnabled(false);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+
+            }
+        });
+
+
+
+        go_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+
+
+                final String name = sellNameOfOzaarItems.getEditText().getText().toString().trim().toLowerCase();
+                final String price = sellPriceOfOzaarItems.getEditText().getText().toString().trim().toLowerCase();
+                final String total = totalSellItemsOfOzaarItems.getEditText().getText().toString().trim().toLowerCase();
+
+
+
+                if (TextUtils.isEmpty(name) && TextUtils.isEmpty(price) && TextUtils.isEmpty(total))
+                {
+                    sellNameOfOzaarItems.setError("Empty");
+                    sellNameOfOzaarItems.requestFocus();
+                    sellNameOfOzaarItems.setErrorEnabled(true);
+
+                    sellPriceOfOzaarItems.setError("Empty");
+                    sellPriceOfOzaarItems.requestFocus();
+                    sellPriceOfOzaarItems.setErrorEnabled(true);
+
+                    totalSellItemsOfOzaarItems.setError("Empty");
+                    totalSellItemsOfOzaarItems.requestFocus();
+                    totalSellItemsOfOzaarItems.setErrorEnabled(true);
+
+
+                } else if (TextUtils.isEmpty(name)) {
+
+                    sellNameOfOzaarItems.setError("Empty");
+                    sellNameOfOzaarItems.setErrorEnabled(true);
+
+
+                    if (TextUtils.isEmpty(price))
+                    {
+                        sellPriceOfOzaarItems.setError("Empty");
+                        sellPriceOfOzaarItems.requestFocus();
+                        sellPriceOfOzaarItems.setErrorEnabled(true);
+                    }
+                    else
+                    {
+                        sellPriceOfOzaarItems.setError(null);
+                        sellPriceOfOzaarItems.setErrorEnabled(false);
+                    }
+
+                    if (TextUtils.isEmpty(total))
+                    {
+                        totalSellItemsOfOzaarItems.setError("Empty");
+                        totalSellItemsOfOzaarItems.requestFocus();
+                        totalSellItemsOfOzaarItems.setErrorEnabled(true);
+                    }
+                    else
+                    {
+                        totalSellItemsOfOzaarItems.setError(null);
+                        totalSellItemsOfOzaarItems.setErrorEnabled(false);
+                    }
+
+
+
+
+                } else if (TextUtils.isEmpty(price)) {
+
+                    sellPriceOfOzaarItems.setError("Empty");
+                    sellPriceOfOzaarItems.setErrorEnabled(true);
+                    sellPriceOfOzaarItems.requestFocus();
+
+
+                    if (TextUtils.isEmpty(name))
+                    {
+                        sellNameOfOzaarItems.setError("Empty");
+                        sellNameOfOzaarItems.requestFocus();
+                        sellNameOfOzaarItems.setErrorEnabled(true);
+                    }
+                    else
+                    {
+                        sellNameOfOzaarItems.setError(null);
+                        sellNameOfOzaarItems.setErrorEnabled(false);
+                    }
+
+                    if (TextUtils.isEmpty(total))
+                    {
+                        totalSellItemsOfOzaarItems.setError("Empty");
+                        totalSellItemsOfOzaarItems.requestFocus();
+                        totalSellItemsOfOzaarItems.setErrorEnabled(true);
+                    }
+                    else
+                    {
+                        totalSellItemsOfOzaarItems.setError(null);
+                        totalSellItemsOfOzaarItems.setErrorEnabled(false);
+                    }
+                }
+                else if (TextUtils.isEmpty(total)) {
+
+                    sellPriceOfOzaarItems.setError("Empty");
+                    sellPriceOfOzaarItems.setErrorEnabled(true);
+                    sellPriceOfOzaarItems.requestFocus();
+
+
+                    if (TextUtils.isEmpty(name))
+                    {
+                        sellNameOfOzaarItems.setError("Empty");
+                        sellNameOfOzaarItems.requestFocus();
+                        sellNameOfOzaarItems.setErrorEnabled(true);
+                    }
+                    else
+                    {
+                        sellNameOfOzaarItems.setError(null);
+                        sellNameOfOzaarItems.setErrorEnabled(false);
+                    }
+
+                    if (TextUtils.isEmpty(price))
+                    {
+                        sellPriceOfOzaarItems.setError("Empty");
+                        sellPriceOfOzaarItems.requestFocus();
+                        sellPriceOfOzaarItems.setErrorEnabled(true);
+                    }
+                    else
+                    {
+                        sellPriceOfOzaarItems.setError(null);
+                        sellPriceOfOzaarItems.setErrorEnabled(false);
+                    }
+                }
+
+                else
+                    {
+
+                        sellNameOfOzaarItems.setError(null);
+                        sellNameOfOzaarItems.setErrorEnabled(false);
+
+                        sellPriceOfOzaarItems.setError(null);
+                        sellPriceOfOzaarItems.setErrorEnabled(false);
+
+                        totalSellItemsOfOzaarItems.setError(null);
+                        totalSellItemsOfOzaarItems.setErrorEnabled(false);
+
+
+
+                        progressDialog.show();
+                        
+                        final int total_Int = Integer.parseInt(total);
+
+
+                    final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("User").child(userId);
+
+                    //                    final DatabaseReference referenceOfPartChild = mRef.child("Parts");
+
+                    Query query = mRef.child("Parts").orderByChild("name_of_parts").equalTo(name);
+
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            if (snapshot.exists())
+                            {
+                                //Toast.makeText(DashBoard.this, snapshot.toString(), Toast.LENGTH_SHORT).show();
+                                Log.i(TAG,snapshot.toString());
+
+                                String nameOfOzaarFromPart = null;
+                                String dateOfOzaarFromPart = null;
+                                String sellPriceOfOzaarFromPart = null;
+
+
+                                int purchase_price = 0;
+                                int Number_of_items = 0;
+                                int sold = 0;
+
+                                String partKey = null;
+
+                                for(DataSnapshot fields : snapshot.getChildren())
+                                {
+                                    nameOfOzaarFromPart = fields.child("name_of_parts").getValue().toString();
+                                    dateOfOzaarFromPart = fields.child("last_purchase_date").getValue().toString();
+                                    sellPriceOfOzaarFromPart = fields.child("sell").getValue().toString();
+
+                                    purchase_price = Integer.parseInt(fields.child("purchase_price").getValue(String.class));
+                                    Number_of_items = Integer.parseInt(fields.child("Number_of_items").getValue().toString());
+                                    sold = Integer.parseInt(fields.child("sold").getValue().toString());
+
+                                    partKey = fields.getKey();
+
+
+                                }
+                                sold+=total_Int;
+                                if (total_Int <= Number_of_items)
+                                {
+                                    Number_of_items-=total_Int;
+
+                                    final HashMap<String,Object> partsMap =new HashMap<>();
+                                    partsMap.put("name_of_parts",nameOfOzaarFromPart);
+                                    partsMap.put("last_purchase_date",dateOfOzaarFromPart);
+                                    partsMap.put("sell",sellPriceOfOzaarFromPart);
+                                    partsMap.put("purchase_price",String.valueOf(purchase_price));
+                                    partsMap.put("Number_of_items",Number_of_items);
+                                    partsMap.put("sold",String.valueOf(total_Int));
+
+
+
+
+                                    mRef.child("Parts").child(partKey).setValue(partsMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful())
+                                    {
+                                         Toast.makeText(view.getContext(),"Number_of_items updated",Toast.LENGTH_LONG).show();
+                                    }
+
+                                        }
+                                    });
+
+
+//                                    StatusManger.WANT_UPDATE = true;
+
+
+                                    if (Integer.parseInt(price) >= purchase_price)
+                                    {
+
+
+                                        
+                                        
+                                        mRef.child("sell").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if (snapshot.exists())
+                                                {
+                                                    int sell =Integer.parseInt(snapshot.getValue().toString());
+                                                    sell += total_Int;
+                                                    mRef.child("sell").setValue(String.valueOf(sell));
+                                                }
+                                                else
+                                                {
+                                                    // if set does not Exist
+
+                                                    mRef.child("sell").setValue(total);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+
+                                        final int finalPurchase_price = purchase_price;
+                                        final int finalPurchase_price1 = purchase_price;
+
+
+
+                                        mRef.child("Profit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if (snapshot.exists())
+                                                {
+
+                                                    Query profit_Query = mRef.child("Profit").orderByChild("name_of_parts").equalTo(name);
+
+                                                    profit_Query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists())
+                                                            {
+                                                                int profit = Integer.parseInt(price) - finalPurchase_price;
+
+
+                                                                String nameTemp = null;
+                                                                String key="";
+                                                                String lastDate = null;
+                                                                int price_temp=0;
+                                                                int numberOfItems=0;
+
+
+
+                                                                for (DataSnapshot pri : snapshot.getChildren())
+                                                                {
+                                                                    nameTemp = pri.child("name_of_parts").getValue().toString();
+                                                                    lastDate = pri.child("last_purchase_date").getValue().toString();
+                                                                    key = pri.getKey();
+                                                                    price_temp = Integer.parseInt(pri.child("price").getValue().toString());
+                                                                    numberOfItems = Integer.parseInt(pri.child("Number_of_items").getValue().toString());
+                                                                }
+
+                                                                price_temp+=profit;
+                                                                numberOfItems+=total_Int;
+
+                                                                //String profiDatabaseRefernce = snapshot.getRef().toString();
+
+                                                                HashMap<String,Object> profitMap = new HashMap<>();
+                                                                profitMap.put("name_of_parts",nameTemp);
+                                                                profitMap.put("last_purchase_date",getCurrentDate());
+                                                                profitMap.put("price",String.valueOf(price_temp));
+                                                                profitMap.put("Number_of_items",String.valueOf(numberOfItems));
+
+
+                                                                mRef.child("Profit").child(key).setValue(profitMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if (task.isSuccessful())
+                                                                        {
+                                                                            setContent();
+                                                                            Toast.makeText(view.getContext(),"new Value of number is Added to Profit",Toast.LENGTH_LONG).show();
+                                                                            StatusManger.setWANT_UPDATE(true);
+                                                                            progressDialog.dismiss();
+                                                                            sell_dialog.dismiss();
+
+
+                                                                            //checkFlagForItems();
+
+
+                                                                        }
+                                                                    }
+                                                                });
+
+
+
+                                                            }
+                                                            else
+                                                            {
+
+
+                                                                int profit = Integer.parseInt(price) - finalPurchase_price;
+
+                                                                HashMap map = new HashMap();
+                                                                map.put("name_of_parts",name);
+                                                                map.put("price",String.valueOf(profit));
+                                                                map.put("Number_of_items",total);
+                                                                map.put("last_purchase_date",getCurrentDate());
+
+                                                                mRef.child("Profit").push().setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+
+                                                                        Toast.makeText(view.getContext(),"map is added to profit",Toast.LENGTH_LONG).show();
+                                                                        setContent();
+                                                                        StatusManger.setWANT_UPDATE(true);
+                                                                        progressDialog.dismiss();
+                                                                        sell_dialog.dismiss();
+
+
+                                                                    }
+                                                                }).addOnFailureListener(new OnFailureListener() {
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+
+                                                                        Toast.makeText(view.getContext(),e.toString(),Toast.LENGTH_LONG).show();
+                                                                        progressDialog.dismiss();
+                                                                        sell_dialog.dismiss();
+
+                                                                    }
+                                                                });
+
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+                                                            sell_dialog.dismiss();
+                                                        }
+                                                    });
+                                                }
+                                                else
+                                                {
+                                                    int profit = Integer.parseInt(price) - finalPurchase_price1;
+
+                                                    HashMap map = new HashMap();
+                                                    map.put("name_of_parts",name);
+                                                    map.put("price",String.valueOf(profit));
+                                                    map.put("Number_of_items",total);
+                                                    map.put("last_purchase_date",getCurrentDate());
+
+                                                    mRef.child("Profit").push().setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+
+                                                            setContent();
+                                                            Toast.makeText(view.getContext(),"map is added to profit",Toast.LENGTH_LONG).show();
+                                                            StatusManger.setWANT_UPDATE(true);
+                                                            progressDialog.dismiss();
+                                                            sell_dialog.dismiss();
+
+
+
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+
+                                                            Toast.makeText(view.getContext(),e.toString(),Toast.LENGTH_LONG).show();
+                                                            progressDialog.dismiss();
+                                                            sell_dialog.dismiss();
+                                                        }
+                                                    });
+
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                                progressDialog.dismiss();
+                                                sell_dialog.dismiss();
+                                            }
+                                        });
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                    else
+                                    {
+
+                            /********************************          This is Loss in Items    ************************************/
+
+
+
+                                        mRef.child("sell").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if (snapshot.exists())
+                                                {
+                                                    int sell =Integer.parseInt(snapshot.getValue().toString());
+                                                    sell+=total_Int;
+                                                    mRef.child("sell").setValue(String.valueOf(sell));
+                                                }
+                                                else
+                                                {
+                                                    mRef.child("sell").setValue(total);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+                                        final int finalPurchase_price = purchase_price;
+                                        final int finalPurchase_price1 = purchase_price;
+
+                                        mRef.child("Loss").addListenerForSingleValueEvent(new ValueEventListener()
+                                        {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot)
+                                            {
+                                                if (snapshot.exists())
+                                                {
+                                                    Query profit_Query = mRef.child("Loss").orderByChild("name_of_parts").equalTo(name);
+                                                    profit_Query.addListenerForSingleValueEvent(new ValueEventListener()
+                                                    {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists())
+                                                            {
+                                                                final int loss = finalPurchase_price - Integer.parseInt(price);
+
+                                                                String nameTemp = null;
+                                                                String key="";
+                                                                String lastDate = null;
+                                                                int price_temp=0;
+                                                                int numberOfItems=0;
+
+
+                                                                for (DataSnapshot pri : snapshot.getChildren())
+                                                                {
+                                                                    nameTemp = pri.child("name_of_parts").getValue().toString();
+                                                                    // last Purchase_date update karni ha profit waale part men
+                                                                    lastDate = pri.child("last_purchase_date").getValue().toString();
+                                                                    key = pri.getKey();
+                                                                    price_temp = Integer.parseInt(pri.child("price").getValue().toString());
+                                                                    numberOfItems = Integer.parseInt(pri.child("Number_of_items").getValue().toString());
+
+                                                                }
+
+                                                                price_temp+=loss;
+                                                                numberOfItems+=total_Int;
+
+                                                                //String profiDatabaseRefernce = snapshot.getRef().toString();
+
+                                                                HashMap<String,Object> lossMap = new HashMap<>();
+                                                                lossMap.put("name_of_parts",nameTemp);
+                                                                lossMap.put("last_purchase_date",getCurrentDate());
+                                                                lossMap.put("price",String.valueOf(price_temp));
+
+                                                                // ye bhi profit men update karna ha
+                                                                lossMap.put("Number_of_items",String.valueOf(numberOfItems));
+
+
+
+
+                                                                mRef.child("Loss").child(key).setValue(lossMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if (task.isSuccessful())
+                                                                        {
+                                                                            StatusManger.setWANT_UPDATE(true);
+                                                                            setContent();
+                                                                            Toast.makeText(view.getContext(),"new Value of number is Added to Loss",Toast.LENGTH_LONG).show();
+                                                                            progressDialog.dismiss();
+                                                                            sell_dialog.dismiss();
+
+
+                                                                        }
+                                                                    }
+                                                                });
+
+
+
+
+                                                            }
+                                                            else
+                                                            {
+                                                                int loss = finalPurchase_price -  Integer.parseInt(price);
+
+
+
+                                                                HashMap<String,Object> lossMap = new HashMap<>();
+                                                                lossMap.put("name_of_parts",name);
+                                                                lossMap.put("last_purchase_date",getCurrentDate());
+                                                                lossMap.put("price",String.valueOf(loss));
+                                                                lossMap.put("Number_of_items",total);
+                                                                //map.put("date",getDa)
+
+                                                                mRef.child("Loss").push().setValue(lossMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+                                                                        StatusManger.setWANT_UPDATE(true);
+                                                                        progressDialog.dismiss();
+                                                                        sell_dialog.dismiss();
+                                                                        Toast.makeText(view.getContext(),"new Value of number is Added to Loss",Toast.LENGTH_LONG).show();
+
+                                                                    }
+                                                                }).addOnFailureListener(new OnFailureListener() {
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+
+                                                                        Toast.makeText(view.getContext(),e.toString(),Toast.LENGTH_LONG).show();
+                                                                        progressDialog.dismiss();
+                                                                        sell_dialog.dismiss();
+
+
+                                                                    }
+                                                                });
+
+                                                            }
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                }
+                                                else
+                                                {
+                                                    int Lossi = finalPurchase_price -  Integer.parseInt(price);
+
+                                                    HashMap<String,Object> lossMap = new HashMap<>();
+                                                    lossMap.put("name_of_parts",name);
+                                                    lossMap.put("last_purchase_date",getCurrentDate());
+                                                    lossMap.put("price",String.valueOf(Lossi));
+                                                    lossMap.put("Number_of_items",total);
+                                                    //map.put("date",getDa)
+                                                    mRef.child("Loss").push().setValue(lossMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+
+
+                                                            StatusManger.setWANT_UPDATE(true);
+                                                            setContent();
+                                                            progressDialog.dismiss();
+                                                            sell_dialog.dismiss();
+                                                            Toast.makeText(view.getContext(),"new Value of number is Added to Loss",Toast.LENGTH_LONG).show();
+
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+
+                                                            Toast.makeText(view.getContext(),e.toString(),Toast.LENGTH_LONG).show();
+                                                            progressDialog.dismiss();
+                                                            sell_dialog.dismiss();
+
+                                                        }
+                                                    });
+
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                    }
+
+                                }
+                                else
+                                {
+                                    totalSellItemsOfOzaarItems.setError("0 Items");
+                                    totalSellItemsOfOzaarItems.setErrorEnabled(true);
+                                    totalSellItemsOfOzaarItems.requestFocus();
+                                }
+
+
+                            }
+                            else
+                            {
+                                sellNameOfOzaarItems.setError("This Item is not available");
+                                sellNameOfOzaarItems.requestFocus();
+                                progressDialog.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
+
+            }
+        });
+
+
+
+    }
+    
+    
+    
+    
+    
+    
     private void showAddItemsBoxForUpdate(View view)
-
-
     {
 
 
@@ -279,6 +1005,9 @@ public class Fragment_Dashboard extends Fragment {
 
         /********************** initialing Text Floating Action Button *********************************/
         updateOzaarDataIntoFire = addOzarPopup.findViewById(R.id.updateOzaarDataIntoFire);
+
+
+       ///              Text Watcher Of TextInput Layout
 
         ozaarName_FromAddOzarForUpdate.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -335,10 +1064,12 @@ public class Fragment_Dashboard extends Fragment {
             }
         });
 
+
+
         updateOzaarDataIntoFire.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View view) {
-
+            public void onClick(final View view)
+            {
 
                 String name = ozaarName_FromAddOzarForUpdate.getEditText().getText().toString().trim().toLowerCase();
                 final String total = totalNumber_FromAddOzarForUpdate.getEditText().getText().toString().trim().toLowerCase();
@@ -387,6 +1118,7 @@ public class Fragment_Dashboard extends Fragment {
                 }
                 else
                 {
+                    progressDialog.show();
 
                     final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("User").child(userId);
 
@@ -399,35 +1131,99 @@ public class Fragment_Dashboard extends Fragment {
                             if (snapshot.exists()) {
                                 //Toast.makeText(DashBoard.this, snapshot.toString(), Toast.LENGTH_SHORT).show();
                                 Log.i(TAG, snapshot.toString());
+
+
                                 totalNumber_FromAddOzarForUpdate.setError(null);
                                 totalNumber_FromAddOzarForUpdate.setErrorEnabled(false);
 
                                 ozaarName_FromAddOzarForUpdate.setError(null);
                                 ozaarName_FromAddOzarForUpdate.setErrorEnabled(false);
 
-                                int noOfItems  = 0;
+                                String nameOfPart = null;
+                                String sell = null;
+                                String purchasePrice = null;
+                                String sold = null;
                                 String key = null;
-                                for (DataSnapshot fields : snapshot.getChildren()) {
+                                int noOfItems  = 0;
+
+
+                                for (DataSnapshot fields : snapshot.getChildren())
+
+                                {
+                                    nameOfPart = fields.child("name_of_parts").getValue().toString();
+                                    sell = fields.child("sell").getValue().toString();
+                                    sold = fields.child("sold").getValue().toString();
+                                    purchasePrice = fields.child("purchase_price").getValue().toString();
                                     noOfItems = Integer.parseInt(fields.child("Number_of_items").getValue().toString());
                                     key = fields.getKey();
 
                                 }
                                 noOfItems+=Integer.parseInt(total);
 
-                                mRef.child("Parts").child(key).child("Number_of_items").setValue(noOfItems).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                                HashMap<String,Object> upateMap = new HashMap<>();
+
+                                upateMap.put("name_of_parts",nameOfPart);
+                                upateMap.put("Number_of_items",noOfItems);
+                                upateMap.put("sell",sell);
+                                upateMap.put("sold",sold);
+                                upateMap.put("last_purchase_date",getCurrentDate());
+                                upateMap.put("purchase_price",String.valueOf(purchasePrice));
+
+
+                                final int temp[] = {0};
+
+                                mReference.child(userId).child("total").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                        int totalItemOfUserID = 0;
+
+                                        if (dataSnapshot.exists())
+                                        {
+                                            temp[0] = dataSnapshot.getValue(Integer.class);
+                                            temp[0]  = Integer.parseInt(total);
+
+
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        progressDialog.dismiss();
+                                    }
+                                });
+
+
+
+                                mRef.child("Parts").child(key).setValue(upateMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+
+                                        mReference.child("total").setValue(temp[0]);
+
+                                        StatusManger.setWANT_UPDATE(true);
+                                        setContent();
+                                        progressDialog.dismiss();
                                         Toast.makeText(view.getContext(),"Updated Number of Parts",Toast.LENGTH_LONG).show();
                                         addOzarPopup.dismiss();
 
                                     }
                                 });
 
+
+
+
+
                             }
                             else
                             {
-                                nameOfSellingItem.setError("not available");
-                                nameOfSellingItem.requestFocus();
+                                progressDialog.dismiss();
+                                ozaarName_FromAddOzarForUpdate.setError("not available");
+                                ozaarName_FromAddOzarForUpdate.requestFocus();
 
                                 if(!TextUtils.isEmpty(total))
                                 {
@@ -439,7 +1235,7 @@ public class Fragment_Dashboard extends Fragment {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            progressDialog.dismiss();
                         }
                     });
 
@@ -449,6 +1245,11 @@ public class Fragment_Dashboard extends Fragment {
             }
         });
     }
+
+
+
+
+
 
     private void showAddNewItemBoxActivity(View view) {
 
@@ -514,16 +1315,18 @@ public class Fragment_Dashboard extends Fragment {
     public void setContent()
     {
         setSellAndItemsAndexpectedProfit_Max_Progressbar();
-        //set_Profit_Max_ProgressBar();
+        set_Profit_Max_ProgressBar();
         checkForLoss();
         checkFor_Sell_Item_ProgressBar();
         checkForProfitProgressBar();
-       // shortItem();
+        shortItem();
 
     }
 
     public void shortItem()
     {
+        shortOzaarLinkedList.clear();
+
         Query q1 =  mReference.child(userId).child("Parts").orderByChild("Number_of_items")
                 .endAt(5);
 
@@ -536,11 +1339,50 @@ public class Fragment_Dashboard extends Fragment {
 
                     for (DataSnapshot items: dataSnapshot.getChildren())
                     {
-                        String name = items.child("name_of_parts").getValue().toString();
-                        String stock = items.child("Number_of_items").getValue().toString();
-                        String sold = items.child("sold").getValue().toString();
-                        String lastPurchaseDate = items.child("last_purchase_date").getValue().toString();
+                        String[]  arr = new String[4];
+                        arr[0] = items.child("name_of_parts").getValue().toString();
+                        arr[3] = String.valueOf(items.child("Number_of_items").getValue());
+                        arr[2] = items.child("sold").getValue().toString();
+                        arr[1] = items.child("last_purchase_date").getValue().toString();
+
+                        shortOzaarLinkedList.add(arr);
+
                     }
+
+                    partsAdapterForShortItems = new PartsAdapterForShortItems(view.getContext(),shortOzaarLinkedList);
+                    shortItemsListView.setAdapter(partsAdapterForShortItems);
+
+                }
+                else
+                {
+                    LinkedList<String[]> list =new LinkedList<>();
+                    String[] it=new String[4];
+                    it[0] = "Head Lights";
+                    it[1] = "10/4/2020";
+                    it[2] = "12";
+                    it[3] = "6";
+
+
+                    list.add(it);
+
+                    String[] ite=new String[4];
+                    ite[0] = "Head Lights";
+                    ite[1] = "10/4/2020";
+                    ite[2] = "12";
+                    ite[3] = "6";
+
+                    list.add(ite);
+
+                    String[] item=new String[4];
+                    item[0] = "Head Lights";
+                    item[1] = "10/4/2020";
+                    item[2] = "12";
+                    item[3] = "6";
+
+                    list.add(item);
+                    partsAdapterForShortItems = new PartsAdapterForShortItems(view.getContext(),list);
+                    shortItemsListView.setAdapter(partsAdapterForShortItems);
+
                 }
             }
 
@@ -776,6 +1618,16 @@ public class Fragment_Dashboard extends Fragment {
     }
 
 
+
+    public String getCurrentDate()
+    {
+        String date = null;
+        return  date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+    }
+
+
+
+
     private void AddDatatoFireBase(String mOzaarName, String mPurchase, final String mSell, final String mTotal)
     {
         String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
@@ -790,7 +1642,10 @@ public class Fragment_Dashboard extends Fragment {
 
 
         //
-        mReference.child(mAuth.getUid()).child("Parts").push().updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+        mReference.child(mAuth.getUid()).child("Parts").push().updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>()
+        {
+
+
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful())
@@ -827,6 +1682,7 @@ public class Fragment_Dashboard extends Fragment {
 
                                                                 if (task.isSuccessful())
                                                                 {
+                                                                    StatusManger.setWANT_UPDATE(true);
                                                                     setContent();
                                                                     progressDialog.dismiss();
                                                                     dialogForAddItemsOfOzaar.dismiss();

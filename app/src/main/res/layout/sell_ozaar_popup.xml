@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="55dp"
+    android:layout_marginRight="55dp"
+    android:layout_marginTop="135dp"
+    android:layout_marginBottom="185dp"
+    android:background="@drawable/sell_ozaar_bkgrd"
+    android:weightSum="10"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.6"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@android:color/white"
+        android:text="Sell Ozaar"
+        android:fontFamily="@font/bangers"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        />
+
+
+    // 1.8
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1.8"
+        >
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle_white"
+            android:id="@+id/sellNameOfOzaarItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            app:hintTextColor="@android:color/white"
+            app:startIconDrawable="@drawable/items_for_add_item_for_ozaar"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:startIconTint="@android:color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ozaarName_FromAddOzarForUpdateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ozaar Name"
+                android:textColorHint="@android:color/white"
+                android:layout_gravity="center"
+                android:maxLength="20"
+                android:inputType="text"
+                android:textSize="11sp"
+                android:fontFamily="@font/nexa_bold"
+                android:textColor="@android:color/white"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+    // 1.6
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.7"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle_white"
+            android:id="@+id/sellPriceOfOzaarItems"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5.5"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            app:hintTextColor="@android:color/white"
+
+            android:layout_gravity="center"
+            app:startIconDrawable="@drawable/sell_png_for_additemforozaar"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:startIconTint="@android:color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/sellPriceOfOzaarItemsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="SELL PRICE"
+                android:textColorHint="@android:color/white"
+                android:maxLength="20"
+                android:inputType="number"
+                android:textSize="11sp"
+                android:fontFamily="@font/nexa_bold"
+                android:textColor="@android:color/white"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle_white"
+            android:id="@+id/totalSellItemsOfOzaarItems"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.9"
+            android:gravity="center"
+            app:hintTextColor="@android:color/white"
+            android:layout_gravity="center"
+
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:startIconTint="@android:color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/totalSellItemsOfOzaarItemsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="TOTAL"
+                android:textColorHint="@android:color/white"
+                android:maxLength="20"
+                android:inputType="number"
+                android:textSize="11sp"
+                android:fontFamily="@font/nexa_bold"
+                android:textColor="@android:color/white"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            />
+
+    </LinearLayout>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        />
+
+    //2.6
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.6"
+        >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/go_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="30dp"
+            app:srcCompat="@drawable/arrow_forward"
+            app:fabCustomSize="50dp"
+            app:backgroundTint="@color/darkblue" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</LinearLayout>

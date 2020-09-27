@@ -46,6 +46,7 @@
         android:layout_marginRight="20dp"
         android:gravity="center"
         android:layout_gravity="center"
+        app:hintTextColor="@android:color/white"
         app:startIconDrawable="@drawable/items_for_add_item_for_ozaar"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
@@ -63,7 +64,7 @@
             android:inputType="text"
             android:textSize="11sp"
             android:fontFamily="@font/nexa_bold"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -86,13 +87,12 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
-        android:layout_gravity="center"
-        android:textColorHint="@android:color/white"
+        app:hintTextColor="@android:color/white"
 
-        app:startIconDrawable="@drawable/total_png_for_additemforozaar"
+        android:layout_gravity="center"
+        app:startIconDrawable="@drawable/items_for_add_item_for_ozaar"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
-
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
         app:startIconTint="@android:color/white"
@@ -101,12 +101,13 @@
             android:id="@+id/totalNumber_FromAddOzarForUpdateEditText"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:hint="Total Number"
-            android:maxLength="6"
+            android:hint="Number Of Ozaar"
+            android:textColorHint="@android:color/white"
+            android:maxLength="20"
             android:inputType="number"
             android:textSize="11sp"
             android:fontFamily="@font/nexa_bold"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/items_card_bkgrd"
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        >
+
+        <LinearLayout
+            android:id="@+id/nameOfParts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+
+            >
+
+            <TextView
+                android:id="@+id/name_Of_parts_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NAME "
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                app:fontFamily="@font/nexa_bold"
+                android:layout_marginRight="3dp"/>
+
+            <TextView
+                android:id="@+id/name_Of_parts_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Of Parts"
+                android:textColor="@color/yellow_dark"
+                android:textSize="17dp"
+                app:fontFamily="@font/nexa_bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sellID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
+
+
+
+            >
+
+            <TextView
+                android:id="@+id/sell_number"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nexa_bold"
+                android:text="00"
+                android:textColor="@color/white"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/total_number"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nexa_bold"
+                android:text="00"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:layout_marginLeft="2dp"
+                />
+
+
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/total_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/sellID"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            >
+
+            <TextView
+                android:id="@+id/sell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nexa_bold"
+                android:text="@string/sell_price"
+                android:textColor="@color/white"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stock"
+                android:layout_marginTop="5dp"
+                android:textSize="12dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/nexa_bold"/>
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:layout_below="@id/nameOfParts">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+
+                >
+                <TextView
+                    android:id="@+id/loss_profit"
+                    android:textSize="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nexa_bold"
+                    android:text="@string/last_sell_date"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/date_month_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="DD/MM/YY"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

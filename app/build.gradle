@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.github.armcha:SpaceNavigationView:1.6.0'
     implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
@@ -75,5 +76,8 @@ dependencies {
 
     implementation'com.github.armcha:SpaceNavigationView:1.6.0'
     implementation 'eu.long1:spacetablayout:1.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+
 
 }

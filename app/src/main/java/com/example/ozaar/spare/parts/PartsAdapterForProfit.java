@@ -14,15 +14,16 @@ import java.util.LinkedList;
 
 import static android.icu.lang.UCharacter.toUpperCase;
 
-public class PartsAdapter extends BaseAdapter {
+public class PartsAdapterForProfit extends BaseAdapter {
 
     private final Context mContext;
-   // private final int[] books;
+    // private final int[] books;
 
     private final LinkedList<String[]> parts;
 
     // 1
-    public PartsAdapter(Context context, LinkedList<String[]> parts) {
+    public PartsAdapterForProfit
+    (Context context, LinkedList<String[]> parts) {
         this.mContext = context;
         this.parts=parts;
 
@@ -86,9 +87,8 @@ public class PartsAdapter extends BaseAdapter {
         if(convertView==null)
         {
             final LayoutInflater layoutInflater=LayoutInflater.from(mContext);
-            convertView=layoutInflater.inflate(R.layout.items_card_view,null);
+            convertView=layoutInflater.inflate(R.layout.profit_card_view,null);
         }
-
 
         final TextView name_Of_Part1=(TextView) convertView.findViewById(R.id.name_Of_parts_1);
 
@@ -97,7 +97,7 @@ public class PartsAdapter extends BaseAdapter {
 
         final TextView sell_number=(TextView) convertView.findViewById(R.id.sell_number);
 
-        final TextView date=(TextView) convertView.findViewById(R.id.date_month_year);
+        final TextView date = (TextView) convertView.findViewById(R.id.date_month_year);
 
         final TextView total_number=(TextView) convertView.findViewById(R.id.total_number);
 
@@ -108,7 +108,7 @@ public class PartsAdapter extends BaseAdapter {
         name_Of_Part1.setText(toUpperCase(head));
         name_Of_Part2.setText(toUpperCase(tail));
 
-       date.setText(parts_string_name[1].toString());
+        date.setText(parts_string_name[1].toString());
 
         sell_number.setText(parts_string_name[2].toString());
         total_number.setText(parts_string_name[3].toString());
